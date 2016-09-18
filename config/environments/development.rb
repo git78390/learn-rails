@@ -42,6 +42,25 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # Cofiguration envoi de mail avec SendGrid
+  config.action_mailer.smtp_settings = {
+  address: "smtp.sendgrid.net",
+  # You can use port 25, 587, or 2525 (some ISPs restrict connections on port 25).
+  port: 587,
+  # Notice that we are using configuration variables that are set in the config/secrets.yml file
+  domain: Rails.application.secrets.domain_name,
+  authentication: "plain",
+  user_name: Rails.application.secrets.email_provider_username,
+  password: Rails.application.secrets.email_provider_password
+}
+# ActionMailer Config
+config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.raise_delivery_errors = true
+# Send email in development mode?
+config.action_mailer.perform_deliveries = true
+
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
